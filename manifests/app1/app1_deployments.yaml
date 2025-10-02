@@ -1,0 +1,13 @@
+appVersion:
+kind: Deployment
+metadata:
+  name: app1-deployment
+  labels:
+    app: app1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app1
+  template:
+    metadata: 

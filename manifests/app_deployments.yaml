@@ -1,0 +1,111 @@
+# -----------------------
+# App1 Deployment & Service
+# -----------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app1-deployment
+  labels:
+    app: app1
+spec:
+  replicas: 1   # Only on worker-node1
+  selector:
+    matchLabels:
+      app: app1
+  template:
+    metadata:
+      labels:
+        app: app1
+    spec:
+      nodeSelector:
+        role: app1   # restrict to worker-node1
+      containers:
+      - name: app1-container
+        image: amritjsr/app1:v1.0   # replace with your app1 image
+        ports:
+        - containerPort: 5000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app1-service
+spec:
+  selector:
+    app: app1
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 5000
+  type: ClusterIP  
+---
+# -----------------------
+# App2 Deployment & Service
+# -----------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app2-deployment
+  labels:
+    app: app2
+spec:
+  replicas: 1   # Only on worker-node2
+  selector:
+    matchLabels:
+      app: app2
+  template:
+    metadata:
+      labels:
+        app: app2
+    spec:
+      nodeSelector:
+        role: app2   # restrict to worker-node2
+      containers:
+      - name: app2-container
+        image: amritjsr/app2:v1.0   # replace with your app2 image
+        ports:
+        - containerPort: 5005
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app2-service
+spec:
+  selector:
+    app: app2
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 5005
+  type: ClusterIP  
+---
+# -----------------------
+# Ingress Resource
+# -----------------------
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: apps-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: myapps.local   # Add this in /etc/hosts pointing to one node IP
+    http:
+      paths:
+      - path: /app1
+        pathType: Prefix
+        backend:
+          service:
+            name: app1-service
+            port:
+              number: 80
+      - path: /app2
+        pathType: Prefix
+        backend:
+          service:
+            name: app2-service
+            port:
+              number: 80

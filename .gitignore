@@ -1,0 +1,76 @@
+# General and OS-specific ignored files
+#######################################
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# Environments
+.env
+.env.local
+.env.*.local
+.vscode/
+.github/
+
+# Logs and sensitive data
+#########################
+*.log
+*.bak
+secrets.yaml
+*.key
+*.pem
+*.p12
+
+# Kubernetes manifest and tool-specific files
+#############################################
+# Generated manifests or output directories
+# This is for manifests that are generated dynamically and should not be versioned.
+# Adjust the path based on your project structure.
+/generated-manifests/
+
+# Helm-specific files
+# .helmignore should be used within the chart, but these can be useful in the repo root.
+# Helm documentation recommends ignoring the `charts/` directory if you use dependencies.
+charts/*/charts/
+*.tgz
+*.tar.gz
+
+# Kustomize build output
+# By default, Kustomize writes to a `kustomization.yaml` but some workflows use
+# temporary directories.
+/kustomize-build/
+
+# Skaffold-specific files (if used)
+.skaffold/
+.env-skaffold
+
+# GitOps and other tool files (e.g., ArgoCD, Flux)
+################################################
+# These tools often generate temporary files or state that should be ignored.
+.argocd-diff/
+.flux/
+
+# Terraform (if managing infra alongside)
+# If your repo includes Terraform code to provision clusters, this is essential.
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+
+# IDE-specific files
+#####################
+# JetBrains IDEs (e.g., IntelliJ, GoLand, PyCharm)
+.idea/
+
+# VS Code
+.vscode/
+
+# Vim
+*.swp
+*.swo
+
+# Emacs
+#*~
+

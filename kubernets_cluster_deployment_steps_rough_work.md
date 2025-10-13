@@ -213,7 +213,7 @@ sudo apt-mark hold kubelet kubeadm kubectl
 ## Comment If you are changing the --pod-network-cidr=<Custom Range> then while implementing CNI you need to define or mention during CNI implementation 
 
 ## For Weave - kubectl apply -f "https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml"
-## For Calico - kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+## For Calico -  
 #### For custom pod-network define environmental variable - IPALLOC_RANGE
 
 sudo kubeadm token create --print-join-command #### Command to join Cluster
